@@ -29,11 +29,11 @@ public class UserDAO {
 			pstmt = conn.prepareStatement(SQL);
 			pstmt.setString(1, userID);
 			rs = pstmt.executeQuery();
-			if(rs.next()) {
-				return 0; // ÀÌ¹Ì Á¸ÀçÇÏ´Â È¸¿ø
+			if(rs.next() || userID.equals("")) {
+				return 0; // ì´ë¯¸ ì¡´ì¬í•˜ëŠ” íšŒì›, ì‚¬ìš©ìê°€ id ì…ë ¥ë‚œ ë¹ˆì¹¸ìœ¼ë¡œ
 			}
 			else {
-				return 1; //°¡ÀÔ°¡´ÉÇÑ È¸¿ø
+				return 1; //ê°€ì…ê°€ëŠ¥í•œ íšŒì›
 			}
 		}catch(Exception e) {
 			e.printStackTrace();
@@ -47,21 +47,21 @@ public class UserDAO {
 				e.printStackTrace();
 			}
 		}
-		return -1; //µ¥ÀÌÅÍº£ÀÌ½º ¿À·ù
+		return -1; //ë°ì´í„°ë² ì´ìŠ¤ ì˜¤ë¥˜
 	}
 	
-	public int register(UserDTO user) {
+	public int register(String userID,String  userPassword,String  userName,String  userAge,String  userGender,String  userEmail) {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		String SQL = "INSERT INTO USER VALUES (?, ?, ?, ?, ?, ?)";
 		try {
 			pstmt = conn.prepareStatement(SQL);
-			pstmt.setString(1,user.getUserID());
-			pstmt.setString(2,user.getUserPassword());
-			pstmt.setString(3,user.userName);
-			pstmt.setInt(4,user.getUserAge());
-			pstmt.setString(5,user.getUserGender());
-			pstmt.setString(6,user.getUserEmail());
+			pstmt.setString(1,userID);
+			pstmt.setString(2,userPassword);
+			pstmt.setString(3,userName);
+			pstmt.setInt(4, Integer.parseInt(userAge));
+			pstmt.setString(5, userGender);
+			pstmt.setString(6,userEmail);
 			return pstmt.executeUpdate();
 			
 		}catch(Exception e) {
@@ -76,7 +76,7 @@ public class UserDAO {
 				e.printStackTrace();
 			}
 		}
-		return -1; //µ¥ÀÌÅÍº£ÀÌ½º ¿À·ù
+		return -1; //ë°ì´í„°ë² ì´ìŠ¤ ì˜¤ë¥˜
 	}
 
 }
