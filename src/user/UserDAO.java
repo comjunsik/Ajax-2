@@ -24,7 +24,7 @@ public class UserDAO {
 	public int registerCheck(String userID) {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		String SQL = "SELECT * FROM USER WHERE usreID = ?";
+		String SQL = "SELECT * FROM USER WHERE userID = ?";
 		try {
 			pstmt = conn.prepareStatement(SQL);
 			pstmt.setString(1, userID);
